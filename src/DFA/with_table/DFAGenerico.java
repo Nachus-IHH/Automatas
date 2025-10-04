@@ -40,7 +40,7 @@ public class DFAGenerico {
             
             switch (option) {
                 case 1:
-                    String path = "src/files/automata.json";
+                    String path = "src/files/automatadfa.json";
                     dfa = LogicaDFA.loadFromJSON(path);
                     break;
                 case 2:

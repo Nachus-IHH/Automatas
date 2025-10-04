@@ -28,8 +28,8 @@ public class LogicaDFA {
         this.alphabet = new HashSet<>(Arrays.asList(alphabet));
         this.states = new HashSet<>(Arrays.asList(states));
         this.finalStates = new HashSet<>(Arrays.asList(finalStates));
-        this.transitionTable = new HashMap<>();
         this.initialState = initialState;
+        this.transitionTable = new HashMap<>();
     }
 
     // CLASS METHODS
@@ -45,11 +45,11 @@ public class LogicaDFA {
         // --- Extracción y Conversión de Conjuntos ---
         
         // Gson convierte listas de JSON a ArrayList (List), así que las convertimos a Set
-        Set<String> states = new HashSet<>((List<String>) jsonMap.get("Q"));
-        Set<String> finals = new HashSet<>((List<String>) jsonMap.get("F"));
-        List<String> symbolsList = (List<String>) jsonMap.get("S");
+        Set<String> states = new HashSet<>((List<String>) jsonMap.get("_Q"));
+        Set<String> finals = new HashSet<>((List<String>) jsonMap.get("_F"));
+        List<String> symbolsList = (List<String>) jsonMap.get("_S");
         
-        String initialState = (String) jsonMap.get("initialState");
+        String initialState = (String) jsonMap.get("_initialState");
         
         // Convertir la lista de símbolos String a un array de String para el constructor
         String[] symbolsArray = symbolsList.toArray(new String[0]);
