@@ -1,0 +1,21 @@
+{
+    "type": "NFAE",
+    "_description": "L{w | w contiene un numero par de 'a' y termina en 'b'",
+    "_S": ["a", "b"],
+    "_Q": ["q0", "q1", "q2", "q3"],
+    "_q0": "q0",
+    "_F": ["q3"],
+
+    "q0": {
+        "a": ["q1"],
+        "ε": ["q2"]
+    },
+    "q1": {
+        "a": ["q2"],
+        "b": ["q1"]
+    },
+    "q2": {
+        "a": ["q1"],
+        "b": ["q2", "q3"]
+    }
+}

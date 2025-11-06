@@ -1,0 +1,13 @@
+/*
+ This is our source file:
+which has the string
+
+ for our FA
+ */
+1 0 // this is part of the string.
+1
+/*********************
+*The one above has tabs.
+**********************/
+1 /* this comment is inside the string */ 10    /* jkdfla*/ 0
+1 // here it ends the string.
