@@ -1,9 +1,10 @@
 {
+    "type": "NFA",
     "_description": "L{w | w termina con dos 0's}",
-    "_Q": ["q0", "q1", "q2"],
-    "_F": ["q2"],
     "_S": ["0", "1"],
-    "_initialState": "q0",
+    "_Q": ["q0", "q1", "q2"],
+    "_q0": "q0",
+    "_F": ["q2"],
     
     "q0": {
         "0": ["q1"],
