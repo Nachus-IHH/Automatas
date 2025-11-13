@@ -1,0 +1,16 @@
+# ----------------------------------------------------------------------
+# Reglas de compilación y salida de Java
+# ----------------------------------------------------------------------
+
+# 1. Ignorar archivos compilados de Java (.class)
+*.class
+
+# 2. Ignorar directorios de salida comunes
+/bin/
+/out/
+/target/
+*.war
+*.zip
+
+# 3. Ignorar carpeta de vscode
+.vscode/
