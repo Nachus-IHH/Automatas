@@ -1,6 +1,6 @@
 {
-    "type": "NFA",
-    "_description": "L{w | w termina con dos 0's}",
+    "type": "DFA",
+    "_description": "L{ w | w termina en 00 }",
     "_S": ["0", "1"],
     "_Q": ["q0", "q1", "q2"],
     "_q0": "q0",
