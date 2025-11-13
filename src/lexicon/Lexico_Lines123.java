@@ -4,7 +4,7 @@ import java.util.List;
 
 import io.LectorTXT;
 
-public class Lexico {
+public class Lexico_Lines123 {
 
     // limpia la cadena de comentarios
     public static String Lexical_v1(String filePath) {
