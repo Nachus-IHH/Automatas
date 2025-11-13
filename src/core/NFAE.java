@@ -17,10 +17,8 @@ import java.util.Stack;
  * Provee la estructura y metodos comunes para un Automata Finito NO Determinista
  * que incluye transiciones epsilon (epsilon o $\varepsilon$). (NFAE)
  */
-public class NFAE extends FA {
-
+public class NFAE extends NFA {
     HashMap<String, HashSet<String>> epsilonClosures;
-    boolean useBacktraking = false;
 
     /**
      * {@inheritDoc}
@@ -36,10 +34,22 @@ public class NFAE extends FA {
         this.epsilonClosures = new HashMap<>();
     }
 
-    public void setUseBacktraking(boolean useBacktraking){
-        this.useBacktraking = useBacktraking;
+    /**
+     * Valida si una cadena es valida por el NFA
+     * Permite elegir entre el metodo recursivo (backtracking) o el iterativo (por conjuntos).
+     * 
+     * @param strTest Cadena de entrada a validar
+     * @param backtraking sí es {@code true}, usa el metodo recursivo. Si es {@code false}, usa el metodo iterativo por conjuntos
+     */
+    @Override
+    public void validateString(String strTest) {
+        if (useBacktraking) {
+            validateStringBacktraking(strTest, initialState, "START", new HashSet<>());
+            return ;    
+        }
+        validateStringSetMethod(strTest);
     }
-
+    
     /**
      * Calcula e-Closure para un estado
      * @param state estado del cual obtener $\varepsilon$-Closure
@@ -79,39 +89,32 @@ public class NFAE extends FA {
         return closure;
     }
 
-    /**
-     * Valida si una cadena es valida por el NFA
-     * Permite elegir entre el metodo recursivo (backtracking) o el iterativo (por conjuntos).
-     * 
-     * @param strTest Cadena de entrada a validar
-     * @param backtraking sí es {@code true}, usa el metodo recursivo. Si es {@code false}, usa el metodo iterativo por conjuntos
-     */
-    @Override
-    public void validateString(String strTest) {
-        if (useBacktraking) {
-            validateStringBacktraking(strTest, initialState, "START");
-            return;
+    public HashSet<String> getEpsilonClosure(HashSet<String> statesSet) {
+        HashSet<String> solutionsSet = new HashSet<>();
+        for (String state : statesSet) {
+            solutionsSet.addAll(getEpsilonClosure(state));
         }
-        validateStringSetMethod(strTest);
+        return solutionsSet;
     }
 
-    public void validateStringBacktraking(String strTest, String initialState, String mapeo) {
 
+    private void validateStringBacktraking(String strTest, String state,  String mapeo, Set<String> visitados) {
+        System.out.println("This method hasn't yet been implemented");
     }
-
     /**
      * Valida por simulacion de conjuntos si una cadena es valida
      * @param strTest cadena a validar
      */
+    @Override
     public void validateStringSetMethod(String strTest) {
-        Set<String> solutions = new HashSet<>();
-
         final HashSet<String> EMPTY_SET = new HashSet<>();
-        Set<String> temp = new HashSet(getEpsilonClosure(initialState));
+        Set<String> solutions = new HashSet<>();
+        Set<String> temp = new HashSet<>();
+        
+        temp.addAll(getEpsilonClosure(initialState));
         System.out.println("E-closure(" + initialState + ") = " + temp);
 
         for (int i = 0; i < strTest.length(); i++) {
-            // a ab
             // calculo de rutas posibles
             char character = strTest.charAt(i);
             System.out.print("S^(" + temp.toString() + ", " + character + ") = ");
@@ -153,6 +156,48 @@ public class NFAE extends FA {
     }
 
     /**
+     * Funcion de transicion δ({qx, qx+1, ...}, a)
+     * Retorna el siguiente estado desde un estado dado aplicando un simbolo
+     * 
+     * @param statesSet conjunto de estados
+     * @param symbol simbolo de entrada
+     * @return HashSet<String> conjunto de estados siguientes definidos por δ({qi, qj, ...}, a)
+     */
+    @Override
+    public HashSet<String> deltaSet(HashSet<String> statesSet, char symbol) {
+        if(!isSymbolValid(symbol)) {
+            //System.out.println("No válida por contener símbolo no perteneciente al alfabeto { " + symbol + " }");
+            return new HashSet<>();
+        }
+
+        final HashSet<String> EMPTY_SET = new HashSet<>();
+        HashSet<String> tmpSet = new HashSet<>();
+        HashSet<String> solutionsSet = new HashSet<>();
+        solutionsSet = getEpsilonClosure(statesSet);
+
+        for (String state : solutionsSet) {
+            Map<Character, HashSet<String>> internalMap = transitionTable.get(state);
+            if (internalMap != null) {
+                Set<String> nextStates = internalMap.getOrDefault(symbol, EMPTY_SET);
+                tmpSet.addAll(nextStates);
+            }
+        }
+
+        solutionsSet = getEpsilonClosure(tmpSet);
+        return solutionsSet;
+    }
+
+    /**
+     * Convierte este NFAE a un DFA equivalente (sin transiciones $\varepsilon$).
+     *
+     * @return DFA Regresa una nueva instancia de un DFA equivalente.
+     */
+    @Override
+    public DFA toDFA() {
+        return null;
+    }
+
+    /**
      * Convierte este NFAE a un NFA equivalente (sin transiciones $\varepsilon$).
      *
      * @return NFA Regresa una nueva instancia de un NFA equivalente.
@@ -160,5 +205,4 @@ public class NFAE extends FA {
     public NFA toNFA() {
         return null;
     }
-
 }

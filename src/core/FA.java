@@ -40,28 +40,14 @@ public abstract class FA {
         this.description = description;
         this.transitionTable = new HashMap<>();
     }
-    
+
     /**
-     * Detecta estados sin transiciones y si hay simbolos que no pertenecen al alfabeto
-     * @param strTest cadena a verificar
-     * @return boolean si es true se puede validar la cadena
-     *  si es false no deja validar la cadena
+     * Valida si un simbolo pertenece al alfabeto
+     * @param symbol simbolo a validar
+     * @return boolean dice sí alphabet contiene symbol
      */
-    public final boolean isValidStringInput(String strTest) {
-        for (int i = 0; i < strTest.length(); i++) {
-            if (!alphabet.contains(strTest.charAt(i) + "") ){
-                System.out.println("No válida por contener símbolo no perteneciente al alfabeto {" + strTest.charAt(i) + "}");
-                return false;
-            }
-        }
-        
-        for (String state : states) {
-            HashMap<Character, HashSet<String>> internalTransitions = transitionTable.get(state);
-            if(internalTransitions==null || internalTransitions.isEmpty()) {
-                System.out.println("Estado {" + state + "} NO tiene transiciones definidas");
-            }
-        }
-        return true;
+    public final boolean isSymbolValid(char symbol) {
+        return alphabet.contains(symbol + "");
     }
 
     /**

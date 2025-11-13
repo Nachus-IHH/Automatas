@@ -15,27 +15,19 @@ import java.util.Set;
  * Provee la estructura y metodos comunes para un Automata Finito NO Determinista (NFA)
  */
 public class NFA extends FA {
-    Set<String> backtrackingPaths;
-    Set<String> solutionsStateSet;
     boolean useBacktraking = false;
 
     /**
      * {@inheritDoc}
      * <p>Construye la estructura base de un <b>NFA<b>
      * Ademas de llamar al constructor del padre, inicializa los siguentes campos internos<\p>
-     * <ul>
-     * <li><b>backtrackingPaths</b>: Conjunto usado para almacenar las rutas de validación recursiva.</li>
-     * <li><b>solutionsStateSet</b>: Conjunto usado para el método de simulación por conjuntos.</li>
-     * </ul>
      * 
      */
     public NFA(Set<String> states, Set<String> finalStates, Set<String> alphabet, String initialState, String description) {
         super(states, finalStates, alphabet, initialState, description);
-        this.backtrackingPaths = new HashSet<>();
-        this.solutionsStateSet = new HashSet<>();
     }
 
-    public void setUseBacktraking(boolean useBacktraking){
+    public void setUseBacktraking(boolean useBacktraking) {
         this.useBacktraking = useBacktraking;
     }
 
@@ -62,6 +54,7 @@ public class NFA extends FA {
      * @param mapeo muestra la ruta que sigue y su fin (si es valida o NO valida)
      */
     private void validateStringBacktraking(String strTest, String state,  String mapeo) {
+        Set<String> backtrackingPaths = new HashSet<>();
         mapeo += " -> " + state;
         // CASO BASE
         if (strTest.length() == 0) {
@@ -91,15 +84,15 @@ public class NFA extends FA {
             }
         }
         // imprime rutas
-        System.out.println(getBacktrackingPaths());
+        formatBacktrackingPaths(backtrackingPaths);
     }
 
     /**
      * Simulacion iterativa por conjuntos de una cadena (Método visto en clase)
      * @param strTest cadena a validar
      */
-    private void validateStringSetMethod(String strTest) {
-
+    public void validateStringSetMethod(String strTest) {
+        Set<String> solutionsStateSet = new HashSet<>();
         for (int i = strTest.length()-1; i>=0; i--) {
             System.out.println((i+1) + "\tw=" + strTest.substring(0, i+1) + 
                 "\tw'=" + strTest.substring(0, i) + "\ta=" + strTest.charAt(i)
@@ -135,7 +128,7 @@ public class NFA extends FA {
      * Regresa el conjunto de soluciones obtenidas por validateStringBacktraking()
      * @return String el conjunto de todas las rutas de aceptación/rechazo encontradas por el método de backtracking.
      */
-    public String getBacktrackingPaths() {
+    private String formatBacktrackingPaths(Set<String> backtrackingPaths) {
         String solutions = "";
         for (String k : backtrackingPaths) {
             solutions += k + "\n";
@@ -144,11 +137,36 @@ public class NFA extends FA {
     }
 
     /**
+     * Funcion de transicion δ({qx, qx+1, ...}, a)
+     * Retorna el siguiente estado desde un estado dado aplicando un simbolo
+     * 
+     * @param statesSet conjunto de estados
+     * @param symbol simbolo de entrada
+     * @return HashSet<String> conjunto de estados siguientes definidos por δ({qx, qx+1, ...}, a)
+     */
+    public HashSet<String> deltaSet(HashSet<String> statesSet, char symbol) {
+        if(!isSymbolValid(symbol)) {
+            //System.out.println("No válida por contener símbolo no perteneciente al alfabeto { " + symbol + " }");
+            return new HashSet<>();
+        }
+        final HashSet<String> EMPTY_SET = new HashSet<>();
+        HashSet<String> solutionsSet = new HashSet<>();
+
+        for (String state : statesSet) {
+            Map<Character, HashSet<String>> internalMap = transitionTable.get(state);
+            if (internalMap != null) {
+                Set<String> nextStates = internalMap.getOrDefault(symbol, EMPTY_SET);
+                solutionsSet.addAll(nextStates);
+            }
+        }
+        return solutionsSet;
+    }
+    
+    /**
      * Convierte un NFA a un DFA
      * @return DFA regresa un DFA
      */
     public DFA toDFA() {        
         return null;
     }
-    
 }
