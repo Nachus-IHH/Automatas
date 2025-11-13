@@ -79,3 +79,8 @@ operaciones
 * **peek()** retorna el elemento del tope
 * **size()** devuelve el numero de elementos : int
 * **isEmpty()** indica si la pila esta vacia : boolean
+
+## Lexico
+Automata es un fa
+Token es el name del fa
+lexema es una instancia/cadena que pertenece a un token
