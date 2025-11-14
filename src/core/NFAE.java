@@ -89,6 +89,11 @@ public class NFAE extends NFA {
         return closure;
     }
 
+    /**
+     * Calcula e-Closure para un conjunto de estados
+     * @param statesSet conjunto de estados del cual obtener $\varepsilon$-Closure
+     * @return HashSet<String> El conjunto de estados alcanzables desde el estado inicial solo por transiciones $\varepsilon$.
+     */
     public HashSet<String> getEpsilonClosure(HashSet<String> statesSet) {
         HashSet<String> solutionsSet = new HashSet<>();
         for (String state : statesSet) {
@@ -97,10 +102,17 @@ public class NFAE extends NFA {
         return solutionsSet;
     }
 
-
+    /**
+     * Valida por backtraking si una cadena es valida
+     * @param strTest cadena a validar
+     * @param state estado actual para validar 
+     * @param mapeo mapeo obtenido del backtraking
+     * @param visitados conjunto de estados visitados, es para evitar bucle infinito por e-Closure
+     */
     private void validateStringBacktraking(String strTest, String state,  String mapeo, Set<String> visitados) {
         System.out.println("This method hasn't yet been implemented");
     }
+    
     /**
      * Valida por simulacion de conjuntos si una cadena es valida
      * @param strTest cadena a validar

@@ -12,15 +12,18 @@ import io.SourceReader;
 
 /**
  * Incluye tabla de simbolos y si es un binario, se convierte a decimal
+ * Contiene todo para recibir operaciones aritmeticas
  */
-public class Lexical_v8 {
-    private static final Set<Character> DELIMITERS = new HashSet<>(Arrays.asList(';', ' ', '.', '\n', '\r', '\t'));
+public class Lexical_v10_SAE {
+    private static final Set<Character> DELIMITERS = new HashSet<>(Arrays.asList(' ', '\n', '\r', '\t'));
 
     /**
-     * Lee un archivo carácter por carácter y valida con un autómata.
-     * 
-     * @param filePath  Ruta del archivo fuente
-     * @param automatas Lista de Automátas finitos (DFA, NFA, o NFAE)
+     * Lee un archivo carácter por carácter y valida con distintos FAs.
+     * @param filePath Ruta del archivo a leer
+     * @param automatas array de automatas con los que se trabajara
+     * @param nameTokens array de nombres de los tokens - ej. Op_arithmetic
+     * @param typeTokens array de tipo de tokens -ej. number
+     * @return
      */
     public static SymbolTableSummary analyze(String filePath, FA[] automatas, String[] nameTokens, String[] typeTokens) {
         StringBuilder currentLexeme = new StringBuilder();
@@ -53,11 +56,10 @@ public class Lexical_v8 {
                     if (currentLexeme.length() > 0) {
                         int index = AutomataProcessor.isLexemeAccepted(currentStates, automatas);
                         if (index != -1) {
-                            symbolTable.addTokenOccurrence(nameTokens[index], currentLexeme.toString(), automatas[index].getClass().getSimpleName(), typeTokens[index],sr.getLineNumber(), sr.getColumnNumber());
+                            symbolTable.addTokenOccurrence(nameTokens[index], currentLexeme.toString(), automatas[index].getClass().getSimpleName(), typeTokens[index],sr.getLineNumber(), sr.getColumnNumber()-2);
                         } else {
-                            symbolTable.addTokenOccurrence("ERROR", currentLexeme.toString(), "?", "?", sr.getLineNumber(), sr.getColumnNumber());
+                            symbolTable.addTokenOccurrence("TOKEN_ERROR", currentLexeme.toString(), "?", "?", sr.getLineNumber(), sr.getColumnNumber()-2);
                         }
-     
                         currentLexeme = new StringBuilder();
                     }
 
@@ -71,12 +73,12 @@ public class Lexical_v8 {
                 currentLexeme.append(symbol);
             }
         } catch (UnclosedCommentException e) {
-            System.err.println("ERROR FATAL (Lexical_v8): " + e.getMessage());
+            System.err.println("ERROR FATAL (Lexical_v10_SAE): " + e.getMessage());
             System.err.printf("Analisis abortado en Linea %d, Columna %d.%n",
                     e.getLineNumber(), e.getColumnNumber());
             return symbolTable;
         } catch (IOException e) {
-            System.err.println("Error de lectura de archivo (Lexical_v8)" + e.getMessage());
+            System.err.println("Error de lectura de archivo (Lexical_v10_SAE)" + e.getMessage());
             e.printStackTrace();
             return symbolTable;
         }

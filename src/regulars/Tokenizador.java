@@ -3,7 +3,6 @@ package regulars;
 import java.util.ArrayList;
 import java.util.Set;
 
-
 //a  [d-f0-2]           [a-c]df+[1-3]^* + [djl.com]
 //a ( ( d + e + f ) + ( 0 + 1 + 2 ) ) ( ( a + b + c ) ) d f + ( ( 1 + 2 + 3 ) ) ^* + ( d + j + l + . + c + o + m )
 /**
@@ -41,13 +40,18 @@ public class Tokenizador {
         return tokens.toArray(new String[0]);
     }
 
-    // obtiene el token de una potencia ^x
+    /**
+     * Obtiene el token de una potencia ^x
+     * 
+     * @param substr cadena del cual se tomara la potencia
+     * @return String con el token power
+     */
     private static String tokenOfPower(String substr) {
         int j = 1;
-        if (POWER_MODIFIERS.contains(String.valueOf(substr.charAt(j)) )) {
+        if (POWER_MODIFIERS.contains(String.valueOf(substr.charAt(j)))) {
             substr.substring(0, j++);
         }
-        while (j < substr.length() && Character.isDigit(substr.charAt(j)) ) {
+        while (j < substr.length() && Character.isDigit(substr.charAt(j))) {
             j++;
         }
 
@@ -55,6 +59,12 @@ public class Tokenizador {
     }
 
     // regular expression expansion
+    /**
+     * Expande una expresion regular ej. [a-c] -> ((a+b+c))
+     * 
+     * @param expresion expresion a expander
+     * @return String expresion regular expandida
+     */
     private static String expandCharacterSets(String expresion) {
         StringBuilder expresionExpand = new StringBuilder();
 
@@ -65,7 +75,7 @@ public class Tokenizador {
                     j++;
                 }
 
-                StringBuilder expansion = new StringBuilder(parseSetContent(expresion.substring(i+1, j)));
+                StringBuilder expansion = new StringBuilder(parseSetContent(expresion.substring(i + 1, j)));
                 expresionExpand.append(expansion);
                 i = j;
                 continue;
@@ -77,7 +87,12 @@ public class Tokenizador {
         return String.valueOf(expresionExpand);
     }
 
-    // Recibe solo el contenido del conjunto 0-9a-z y lo procesa () + () ...
+    /**
+     * Recibe solo el contenido del conjunto 0-9a-z || a y lo procesa () + () ...
+     * 
+     * @param content Contenido
+     * @return Regresa el contenido expandido
+     */
     public static String parseSetContent(String content) {
         if (content.isEmpty()) {
             return "";
@@ -90,8 +105,8 @@ public class Tokenizador {
             String token = "";
             boolean isRange = false;
 
-            if (i+2 < content.length() && content.charAt(i+1) == SCRIPT) {
-                char endChar = content.charAt(i+2);
+            if (i + 2 < content.length() && content.charAt(i + 1) == SCRIPT) {
+                char endChar = content.charAt(i + 2);
                 if (endChar > startChar) {
                     token = expandRange(startChar, endChar);
                     isRange = true;
@@ -100,11 +115,11 @@ public class Tokenizador {
             }
 
             if (!isRange) {
-                token = String.valueOf(startChar);    
+                token = String.valueOf(startChar);
             }
 
             expansion.append(token);
-            if (i<content.length()-1) {
+            if (i < content.length() - 1) {
                 expansion.append("+");
             }
         }
@@ -113,14 +128,23 @@ public class Tokenizador {
     }
 
     // Recibe dos caracteres y devuelve la cadena (char1 + char2 + ... + charN)
+    /**
+     * Expande un rango de caracteres contiguos en una expresión regular (RegEx)
+     * con formato de alternativas, donde cada carácter tiene el operador '+'.
+     * <p> Por ejemplo, si el rango es 'a' a 'c', la salida es "(a+b+c+)".
+     * 
+     * @param start caracter inicial del rango
+     * @param end caracter final del rango
+     * @return String cadena con el rango expandido
+     */
     private static String expandRange(char start, char end) {
         StringBuilder rangeExpansion = new StringBuilder("(");
-        
+
         for (; start <= end; start++) {
             rangeExpansion.append((char) start + "+");
         }
         int lng = rangeExpansion.length();
-        rangeExpansion.replace(lng-1, lng, ")");
+        rangeExpansion.replace(lng - 1, lng, ")");
 
         return rangeExpansion.toString();
     }

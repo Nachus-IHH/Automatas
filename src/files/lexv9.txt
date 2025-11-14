@@ -1,5 +1,12 @@
-package files;
-
-public class lexv9 {
-    
-}
+// Kuchau!
+/* 
+********
+*/
+1011101 ; 101x1100  aab
+1011100 /*hola como estas*/ 1011101     aaaab
+1011101    011100 y
+010
+int a = 5
+int b = 7
+a = a + b
+/*hfjkdahkfk*/

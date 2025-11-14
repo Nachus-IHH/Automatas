@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * POJO de un Token
+ * Datos de la Tabla de simbolos sobre un lexema
  */
 public class TokenSummary {
     final String name;
@@ -12,7 +12,6 @@ public class TokenSummary {
     final String typeToken;
     int count;
     List<String> locations;
-    //boolean isValid
 
     public TokenSummary(String name, String automataType, String typeToken, int line, int column) {
         this.name = name;
@@ -23,9 +22,13 @@ public class TokenSummary {
         this.locations.add("(" + line + ", " + column + ")");
     }
 
-    // Método para agregar una nueva aparición
+    /**
+     * Agrega una nueva aparicion del mismo lexema, aumentando count y agregando su ubicacion
+     * @param line linea en la que se encuentra el mismo lexema
+     * @param column columna en la que se encuentra el mismo lexema
+     */
     public void addOccurrence(int line, int column) {
         this.count++;
-        this.locations.add(line + ", " + column);
+        this.locations.add("(" + line + ", " + column + ")");
     }
 }

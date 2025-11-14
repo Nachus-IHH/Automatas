@@ -7,8 +7,7 @@ import io.SourceReader;
 
 /**
  * Administra la lógica para los comentarios de un archivo, regresa el cursor
- * hasta
- * el cierre del comentario
+ * hasta el cierre del comentario
  */
 public class CommentHandler {
     public static final char SLASH = '/';
@@ -20,7 +19,7 @@ public class CommentHandler {
      * @param sr     SourceReader que esta leyendo el archivo
      * @param symbol simbolo actual a verificar
      * @return boolean true es comentario, false es operador
-     * @throws IOException
+     * @throws IOException Si ocurre un error de I/O durante la lectura hace propagacion del error
      */
     public static boolean beginComment(SourceReader sr, char symbol) throws IOException {
         if (symbol == SLASH) {
@@ -37,7 +36,7 @@ public class CommentHandler {
      * Deja posicionado al cursor al inicio de la siguiente linea tras el comentario
      * 
      * @param sr SourceReader que esta leyendo el archivo
-     * @throws IOException Si ocurre un error de I/O durante la lectura
+     * @throws IOException Si ocurre un error de I/O durante la lectura hace propagacion del error
      */
     public static void skipSingleLineComment(SourceReader sr) throws IOException {
         sr.nextChar(); // avanza al siguiente simbolo '/'

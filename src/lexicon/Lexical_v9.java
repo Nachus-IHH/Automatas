@@ -14,7 +14,7 @@ import io.SourceReader;
  * Incluye tabla de simbolos y si es un binario, se convierte a decimal
  */
 public class Lexical_v9 {
-    private static final Set<Character> DELIMITERS = new HashSet<>(Arrays.asList(';', ' ', '.', '\n', '\r', '\t'));
+    private static final Set<Character> DELIMITERS = new HashSet<>(Arrays.asList(' ', '\n', '\r', '\t'));
 
     /**
      * Lee un archivo carácter por carácter y valida con un autómata.
