@@ -1,4 +1,8 @@
 core
+data_structures
+exceptions
 io
+lexicon
+regulars
 ui
 utils
