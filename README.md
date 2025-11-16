@@ -1,76 +1,88 @@
-# Automatas
+# Automatas - Simulador de FA, Analizador lexico y Herramientas de expresiones regulares
 
-> **[Una frase concisa que describa el propósito principal del proyecto.]**
->
-> **Ejemplo:** Implementación de un Analizador Léxico (Scanner) para un subconjunto del lenguaje Java, construido para la materia de Lenguajes y Autómatas.
+> **Proyecto académico para la materia “Lenguajes y Autómatas I”.**  
+> Incluye simulación de DFA, NFA y NFA-ε, construcción de autómatas desde expresiones
+> regulares, un analizador léxico incremental (Lexical_v1–v10) y una GUI para visualizar FA
 
-## 🧠 Fundamentos Teóricos y Conceptos
+## Caracteristicas principales
+- **Simulador completo** de DFA, NFA y NFA-ε
+- **Carga de autómatas desde JSON** con FAParser  
+- **Analizador Léxico modular (v1–v10)** con mejoras graduales:
+  - lectura carácter por carácter,
+  - eliminación de comentarios,
+  - manejo de delimitadores,
+  - tabla de símbolos,
+  - palabras reservadas,
+  - tokens de un solo carácter,
+  - soporte para expresiones aritméticas.
+- **Conversión de expresiones regulares → NFA-ε**
+- **GUI** para visualizar cualquier FA y sus transiciones
+- **Estructuras auxiliares**, excepciones personalizadas y utilidades para manipular FA
 
-Este proyecto se basa en los principios de la Teoría de la Computación y la construcción de compiladores. Los componentes clave del análisis léxico se implementaron utilizando Máquinas de Estados Finitos (FSM).
+## Fundamentos Teóricos y Conceptos
 
-* **Documentación Formal:**
-    Consulte el archivo **[DefinicionesFormales.pdf/md]** para acceder a la especificación completa del lenguaje, las expresiones regulares utilizadas, los diagramas de autómatas de estados finitos (NFA/DFA) y la metodología de construcción.
-    > [Enlace Directo a las Definiciones Formales](./DefinicionesFormales.pdf)
+Este proyecto se basa en:
+- Teoria de Automatas y Lenguajes Formales
+- Analisis léxico
+- Construccion de Automatas via definiciones formales
+- Simulación de DFA, NFA y NFA-ε (closures ε, delta sets, etc
+
+Documento formal con las definiciones utilizadas:  
+[**Definiciones Formales**](./DefinicionesFormales.md)
 
 ---
 
-## 🛠️ Estructura del Proyecto y Archivos
-
-Esta es la organización principal del repositorio:
+## Estructura del Proyecto y Archivos
 
 * **`src/`**: Contiene todo el código fuente del proyecto.
-    * `src/core/`: [Describe qué hay aquí, Ej: El código central del Analizador Léxico y el motor de autómatas.]
-    * `src/lexicon/`: [Describe qué hay aquí, Ej: Las clases de la Tabla de Símbolos y los *Tokens*.]
-* **`docs/`**: Contiene la documentación generada automáticamente (Javadoc).
-* **`[nombre_archivo].jar`**: El binario ejecutable del proyecto.
-* **`.gitignore`**: Reglas para excluir archivos compilados (`.class`), carpetas de IDE, etc.
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+    * `src/core/`: Implementacion de FA (NFA, DFA y NFAE)
+    * `src/data_structures/`: Estructuras de datos propias. Por ahora solo uso estructuras de Java
+    * `src/exceptions/`: Excepciones personalizadas
+    * `src/files/`: FA en JSON y archivos de prueba para el léxico .txt
+    * `src/io/`: Manejo de archivos
+    * `src/lexicon/`: Lexical_v1–v10, Tabla de Símbolos, AutomataProcessor y ConverStringNumber
+    * `src/regulars/`: Construccion de NFAE mediante expresiones regulares
+    * `src/ui/`: Interfaz grafica (visualizador de FA unicamente)
+    * `src/utils/`: Clases de utilidad
+* **`docs/`**: Javadoc generado automaticamente
+* **`lib/`**: Librerias externas (gson-2.12.2.jar)
 
 ---
 
-## 🚀 Instalación y Ejecución
+## Instalacion y Ejecucion
 
 ### Requisitos
 
-* [Java Development Kit (JDK) Versión 17 o superior].
+* JDK instalado
+* IDE (en mi caso es VS Code)
 
-### Compilación y Ejecución
-
-1.  Clonar el repositorio:
+### Clonar el repositorio  
     ```bash
-    git clone [https://docs.github.com/es/repositories/creating-and-managing-repositories/quickstart-for-repositories](https://docs.github.com/es/repositories/creating-and-managing-repositories/quickstart-for-repositories)
-    cd [nombre-repo]
+    git clone [https://github.com/Nachus-IHH/Automatas.git](https://github.com/Nachus-IHH/Automatas.git)
+    cd [Automatas]
     ```
-
-2.  Compilar el código fuente:
-    ```bash
-    # Dependiendo de tu estructura, podrías usar un script o un comando más simple.
-    javac -d bin src/main/*.java 
-    ```
-
-3.  Ejecutar el programa:
-    ```bash
-    java -cp bin tu.paquete.ClasePrincipal [argumentos]
-    ```
+### Ejecutar
+* Puedes ejecutar dentro de core para probar FA
+* Lexical_vX dentro de lexicon para probar cualquier version de lexical_vX
 
 ---
 
-## 📚 Documentación Técnica (Javadoc)
-
-La documentación técnica del código fuente, incluyendo clases, métodos y variables, se generó utilizando Javadoc.
+## Documentación Técnica (Javadoc)
+Contiene detalles completos del diseño, clases y métodos
 
 * **Acceso a la Documentación:**
-    [**Ver la Documentación Completa en GitHub Pages**](https://[tu-usuario].github.io/[tu-repo])
-    > *Esta documentación detalla el uso interno de la Tabla de Símbolos, la lógica de las transiciones y los conversores binarios.*
+    [**Ver la Documentación Completa en GitHub Pages**](https://nachus-ihh.github.io/Automatas/docs/index.html)
+    > *Esta documentación detalla como esta hecho el proyecto*
 
 ---
 
-## 🧑‍💻 Autoría y Contacto
+## Extras
+* Próximas ideas
+* Conversion de NFAE → NFA -> DFA
+* Optimización de NFA → DFA
+* Minimización de DFA
+* Construcción de parse trees para expresiones regulares
 
-| Rol | Nombre | Contacto |
-| :--- | :--- | :--- |
-| Desarrollador Principal | [Tu Nombre Completo] | [Tu Perfil de GitHub] |
-
-**Licencia:** Este proyecto está bajo la licencia [Licencia, Ej: MIT].
+## Autor
+Nachus-IHH
+Este proyecto es de uso académico y educativo
