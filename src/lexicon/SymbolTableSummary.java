@@ -5,6 +5,7 @@ import java.util.Map;
 
 /**
  * Gestiona los resultados de los tokens
+ * tambien mostrar cuantos tokens se encontraron y cuantos de que tipo
  */
 public class SymbolTableSummary {
     HashMap<String, TokenSummary> symbolTable;
@@ -41,7 +42,7 @@ public class SymbolTableSummary {
 
         output.append("=".repeat(130)).append("\n");
         output.append(String.format(FORMAT_HEADER, 
-            "Token Name", "Lexeme", "FA Type", "Type Token", "Number", "Count", "Locations (Line, Col)")
+            "Token Name", "Lexeme", "FA Type", "Alias Token", "Number", "Count", "Locations (Line, Col)")
         ).append("\n");
         output.append("=".repeat(130)).append("\n");
 
@@ -51,11 +52,11 @@ public class SymbolTableSummary {
             String lexeme = entry.getKey();
             String numberString = "-";
             
-            if (summary.typeToken.equals("binary")) {
+            if (summary.name.equals("binary")) {
                 int number = ConverterStringNumber.binaryToDecimal(lexeme);
                 numberString = String.valueOf(number);
             }
-            else if (summary.typeToken.equals("decimal")) {
+            else if (summary.name.equals("number")) {
                 numberString = lexeme;
             }
             String locationsString = String.join("; ", summary.locations);
@@ -64,7 +65,7 @@ public class SymbolTableSummary {
                 summary.name,
                 lexeme,
                 summary.automataType,
-                summary.typeToken,
+                summary.aliasToken,
                 numberString,
                 summary.count,
                 locationsString

@@ -183,14 +183,14 @@ public class LexMain {
         DFA vars = loadFromJSONFA("src/files/vars.json");
 
         FA[] automatas = { keyWords, opLogic, opRelational, opArithmetic, oneChar, binary, numbers, vars };
-        String[] nameTokens = { "keyWords", "opLogic", "opRelational", "opArithmetic", "oneChar", "binary", "numbers", "vars" };
-        String[] typeTokens = { "KeyWord", "Operator", "Operator", "Operator", "OneChar", "binary", "numbers", "variable" };
+        String[] nameTokens = { "keyWords", "opLogic", "opRelational", "opArithmetic", "oneChar", "binary", "number", "variable" };
+        String[] aliasTokens = { "kw", "L", "R", "A", "1", "01", "09", "var" };
         String filePath = "src/files/lexv9.txt";
 
         for (FA automata : automatas) {
             System.out.println(automata.showInfo() + "\n");
         }
-        SymbolTableSummary symbolTableSummary = Lexical_v10_SAE.analyze(filePath, automatas, nameTokens, typeTokens);
+        SymbolTableSummary symbolTableSummary = Lexical_v10_SAE.analyze(filePath, automatas, nameTokens, aliasTokens);
         System.out.println("\n\n" + symbolTableSummary.exportTable());
     }
 }

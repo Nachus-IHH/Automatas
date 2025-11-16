@@ -9,14 +9,14 @@ import java.util.List;
 public class TokenSummary {
     final String name;
     final String automataType;
-    final String typeToken;
+    final String aliasToken;
     int count;
     List<String> locations;
 
-    public TokenSummary(String name, String automataType, String typeToken, int line, int column) {
+    public TokenSummary(String name, String automataType, String aliasToken, int line, int column) {
         this.name = name;
         this.automataType = automataType;
-        this.typeToken = typeToken;
+        this.aliasToken = aliasToken;
         this.count = 1;
         this.locations = new ArrayList<>();
         this.locations.add("(" + line + ", " + column + ")");

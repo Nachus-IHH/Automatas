@@ -1,12 +1,30 @@
-// Kuchau!
-/* 
-********
+// Informacion de FA a cargar en Lexical_v10_SAE LexMain.loadLexical_v10_SAE()
+/*
+Automata    Language                        Alphabet                    String valid/invalid    Token           Alias   
+1. NFA      L={int if do for}               S={i n t f d o r}           int / init              keyWords        kw
+2. NFA      L={&& || !}                     S={& | !}                   && / &                  opLogic         L
+3. NFA      L={< > <= >= == !=}             S={< > = !}                 <= / =<                 opRelationalR   R
+4. NFA      L={+ - * / %}                   S={+ - * / %}               + / ++                  opArithmetic    A
+5. NFA      L={; , . ( ) { } [ ]}           S={; , . ( ) { } [ ]}       ; / ;;                  oneChar         1
+6. DFA      L={ (0+1)^+ }                   S={0 1}                     0101 / ' '              binary          01
+7. DFA      L={(0+1+2+3+4+5+6+7+8+9)^+}     L={(0 1 2 3 4 5 6 7 8 9)}   0102 / 038H             numbers         09
+8. DFA      L={ (a+b+c)^+}                  S={a b c}                   acb / ab*               variable        var
 */
-1011101 ; 101x1100  aab
-1011100 /*hola como estas*/ 1011101     aaaab
-1011101    011100 y
-010
-int a = 5
-int b = 7
-a = a + b
-/*hfjkdahkfk*/
+$      $
+1011101 $ 101x1100 $aab;
+1001
+    1100
+    0011;
+
+1011100 $esta  /*hola como estas//*/  Mal$  aaaab;
+1011101 $ >= $  011100 $ y ;
+0
+    1
+    
+0;
+
+
+$int $a $= $5;
+$int $b $= $7;
+$a   $= $a $+ $b;
+/* Se logro!    //*/$$

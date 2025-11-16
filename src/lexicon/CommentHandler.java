@@ -62,7 +62,6 @@ public class CommentHandler {
         while (!sr.isEOF()) {
             // Busca el final del comentario '*/'
             if (symbol == ASTERISK && sr.peekChar() == SLASH) {
-                symbol = sr.nextChar(); // Consumo ASTERISK '*'
                 sr.nextChar(); // Consumo SLASH '/'
                 return;
             }

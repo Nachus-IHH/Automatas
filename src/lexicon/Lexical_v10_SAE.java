@@ -15,7 +15,8 @@ import io.SourceReader;
  * Contiene todo para recibir operaciones aritmeticas
  */
 public class Lexical_v10_SAE {
-    private static final Set<Character> DELIMITERS = new HashSet<>(Arrays.asList(' ', '\n', '\r', '\t'));
+    private static final Set<Character> SEPARATOR_ESPECIAL = new HashSet<>(Arrays.asList(';', '$'));
+    private static final Set<Character> SEPARATOR = new HashSet<>(Arrays.asList(' ', '\n', '\r', '\t'));
 
     /**
      * Lee un archivo carácter por carácter y valida con distintos FAs.
@@ -51,14 +52,18 @@ public class Lexical_v10_SAE {
                     continue;
                 }
 
+                // Ignora los espacios en blanco
+                if (SEPARATOR.contains(symbol)) {
+                    continue;
+                }
                 // Detectar delimitador - termino un lexeme
-                if (DELIMITERS.contains(symbol)) {
+                if (SEPARATOR_ESPECIAL.contains(symbol)) {
                     if (currentLexeme.length() > 0) {
                         int index = AutomataProcessor.isLexemeAccepted(currentStates, automatas);
                         if (index != -1) {
-                            symbolTable.addTokenOccurrence(nameTokens[index], currentLexeme.toString(), automatas[index].getClass().getSimpleName(), typeTokens[index],sr.getLineNumber(), sr.getColumnNumber()-2);
+                            symbolTable.addTokenOccurrence(nameTokens[index], currentLexeme.toString(), automatas[index].getClass().getSimpleName(), typeTokens[index],sr.getLineNumber(), sr.getColumnNumber()-3);
                         } else {
-                            symbolTable.addTokenOccurrence("TOKEN_ERROR", currentLexeme.toString(), "?", "?", sr.getLineNumber(), sr.getColumnNumber()-2);
+                            symbolTable.addTokenOccurrence("TOKEN_ERROR", currentLexeme.toString(), "?", "?", sr.getLineNumber(), sr.getColumnNumber()-3);
                         }
                         currentLexeme = new StringBuilder();
                     }
@@ -82,6 +87,7 @@ public class Lexical_v10_SAE {
             e.printStackTrace();
             return symbolTable;
         }
+
         return symbolTable;
     }
 
